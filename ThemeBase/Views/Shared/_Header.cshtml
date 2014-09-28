@@ -1,0 +1,48 @@
+﻿<div class="well navbar navbar-default navbar-fixed-top">
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="col-md-4"> <img src="~/Content/Images/Logo.png" class="img-responsive" /></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 hidden-print">
+            <div class="pull-left">
+                <ul id="notifications">
+                    <li>
+                        <i class="fa fa-warning"> 20</i>
+                        <ul>
+                            <li disabled="disabled"><i class="fa fa-warning">&nbsp;</i>Notifications</li>
+                            <li><i class="fa fa-comments">&nbsp;</i>Comments &nbsp;<span class="badge">30</span></li>
+                            <li><i class="fa fa-inbox">&nbsp;</i>Emails &nbsp;<span class="badge">10</span></li>
+                            <li><i class="fa fa-info-circle">&nbsp;</i>General &nbsp;<span class="badge">5</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <i class="fa fa-user"></i>
+                        <ul>
+                            <li><a href="~/Views/EmployeeProfile.cshtml"><i class="fa fa-user-md">&nbsp;</i>Profile</a></li>
+                            <li><i class="fa fa-sign-out">&nbsp;</i>Log Out</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <i class="fa fa-gear"></i>
+                        <ul>
+                            <li class="k-button">
+                                <a href="javascript:(function(){var%20ktb=window.kendoThemeBuilder,s,d=document;if(typeof%20ktb!='undefined'){ktb.open();return}else{s=d.createElement('script');s.src='http://kendoui-themebuilder.telerik.com/bootstrap.js?'+(+new%20Date());d.getElementsByTagName('body')[0].appendChild(s);}})()" id="bookmarklet">Theme Builder</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <i class="fa fa-calendar">&nbsp;</i>@DateTime.Today.ToString("yyy-MM-dd") <span id="clockbox"></span>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+</div>

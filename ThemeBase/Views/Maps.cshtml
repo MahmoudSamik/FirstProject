@@ -1,0 +1,55 @@
+﻿@inherits ViewPage
+@{
+    ViewBag.title = "Maps";
+    Layout = "_Layout";
+}
+@section HeaderCss{
+
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+<style>
+    #map {
+        height: 500px !important;
+    }
+
+    .mapfix {
+        overflow: visible !important;
+    }
+</style>
+
+}
+<div class="k-content">
+    <div>
+        <div id="map" class="col-md-12 clearfix"></div>
+    </div>
+</div>
+@section FooterJs{
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<script>
+    var map = L.map('map', {
+        center: [34.117948, -117.821707],
+        zoom: 13,
+        scrollWheelZoom: false,
+    });
+    L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        id: 'examples.map-i86knfo3'
+    }).addTo(map);
+    L.marker([34.117948, -117.821707]).addTo(map)
+        .bindPopup("<b>National Link</b><br />2235 Auto Centre Dr <br > Glendora, CA 91740").openPopup();
+    var popup = L.popup();
+
+    function onMapClick(e) {
+        popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(map);
+    }
+    map.on('click', onMapClick);
+</script>
+
+
+
+}

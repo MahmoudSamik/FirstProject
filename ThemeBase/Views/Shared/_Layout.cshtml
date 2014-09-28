@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+@Html.Partial("_Head")
+<body onload="startTime()" class="mainBg">
+    <div class="mainContainer k-content">
+        <div class="container">
+            @*Begin Container*@
+            <div class="row">
+                @*Begin Row*@
+                @Html.Partial("_Header")
+
+                <div class="col-md-2 affix affix-top fixedSideBar">
+                    @Html.Partial("SideBarMenu")
+                </div>
+                <div id="main-content" class="col-md-10 panel-wrap">
+                    <section>
+                        <ol class="breadcrumb">
+                            <li><a href="~/default.cshtml"><i class="fa fa-home"></i></a></li>
+                            <li><a href="@ViewBag.Uri">@ViewBag.title</a></li>
+                        </ol>
+                        @RenderBody()
+                    </section>
+                </div>
+
+                @Html.Partial("_Footer")
+</body>
+</html>

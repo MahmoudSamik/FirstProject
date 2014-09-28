@@ -1,0 +1,57 @@
+﻿<aside class="col-md-12 sidebar hidden-print">
+        <div class="well">
+            <div class="row">
+                <div class="col-md-5"><img src="http://placekitten.com/g/50/50" /></div>
+                <div class="col-md-7">
+                    <span><b>John Doe</b></span>
+                    <span>Administrator</span>
+                    <span class="sidebarUserOptions"><a href="#">Settings</a>&nbsp; | &nbsp;<a href="#">Log Out</a></span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <ul id="sidebar">
+            <li disabled="disabled">
+                <h4>Menu</h4>
+            </li>
+            <li><a href="~/default.cshtml">Dashboard</a></li>
+            <li>
+                Pages
+                <ul>
+                    <li><a href="~/Views/BlankPage.cshtml">Blank Page</a></li>
+                    <li>Log In</li>
+                    <li><a href="~/Views//EmployeeProfile.cshtml">Employee Profile</a></li>
+                    <li><a href="~/Views/Scheduler.cshtml">Scheduler</a></li>
+                </ul>
+            </li>
+            <li>
+                Data Vidualization
+                <ul>
+                    <li><a href="~/Views/Maps.cshtml">Maps</a> </li>
+                    <li><a href="~/Views/DataVizApi.cshtml">DataVizApi</a></li>
+                    <li><a href="~/Views/PieChartApi.cshtml">PieChartApi</a></li>
+                    <li><a href="~/Views/WindowDataViz.cshtml">Chart In a Window</a></li>
+                </ul>
+            </li>
+            <li>
+                Tables
+                <ul>
+                    <li><a href="~/Views/Tables.cshtml">Tables</a></li>
+                    <li><a href="~/Views/Clients.cshtml">Clients</a></li>
+                </ul>
+            </li>
+            <li>
+                Forms
+                <ul>
+                    <li><a href="~/Views/Form.cshtml">Profile Form</a></li>
+
+                </ul>
+            </li>
+            <li>
+                Misc
+                <ul></ul>
+            </li>
+
+        </ul>
+    @Html.Partial("ControlPanel")
+</aside>

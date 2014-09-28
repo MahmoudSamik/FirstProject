@@ -1,0 +1,424 @@
+﻿@inherits ViewPage
+
+@{
+    ViewBag.title = "Tables";
+    Layout = "_Layout";
+    }
+@section HeaderCss{
+        <style>
+        #panels {
+            display: table-row;
+        }
+
+        #grid1, #grid2 {
+            width: 460px;
+            display: table-cell;
+        }
+
+        #commands {
+            text-align: center;
+            width: 50px;
+            vertical-align: middle;
+            display: table-cell;
+        }
+
+            #commands div {
+                padding: 5px;
+            }
+
+                #commands div a {
+                    width: 35px;
+                    text-align: center;
+                }
+    </style>
+}
+<div class="col-md-offset-2">
+    <div id="grid2"></div>
+    <div id="commands">
+        <div><a href="#" id="copySelectedToGrid1" class="k-button">></a></div>
+        <div><a href="#" id="copySelectedToGrid2" class="k-button"><</a></div>
+    </div>
+    <div id="grid1"></div>
+</div>
+<hr />
+<div class="clearfix"></div>
+<div id="grid"></div>
+<hr />
+<div id="grid3"></div>
+<button id="showSelection">Show selected IDs</button>
+@section FooterJs{
+<script>
+    $(document).ready(function () {
+        $("#grid").kendoGrid({
+            dataSource: {
+                type: "odata",
+                transport: {
+                    read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+                },
+                pageSize: 20
+            },
+            groupable: true,
+            sortable: true,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            columns: [{
+                field: "ContactName",
+                title: "Contact Name",
+            }, {
+                field: "ContactTitle",
+                title: "Contact Title",
+            }, {
+                field: "CompanyName",
+                title: "Company Name"
+            }, {
+                field: "Country",
+            }]
+        });
+    });
+</script>
+<script>
+    var ds1 = {
+        data: [
+             { GroupName: "Virgin Islands", },
+        ],
+        pageSize: 10,
+        schema: {
+            model: {
+                id: "id",
+                fields: {
+                    id: { type: 'number', editable: true },
+                    GroupName: { type: 'string', editable: true },
+                }
+            }
+        }
+    };
+
+    var ds2 = {
+        data: [
+                { GroupName: "Alabama", },
+                { GroupName: "Alaska", },
+                { GroupName: "American Samoa", },
+                { GroupName: "Arizona", },
+                { GroupName: "Arkansas", },
+                { GroupName: "California", },
+                { GroupName: "Colorado", },
+                { GroupName: "Connecticut", },
+                { GroupName: "Delaware", },
+                { GroupName: "District Of Columbia", },
+                { GroupName: "Federated States Of Micronesia", },
+                { GroupName: "Florida", },
+                { GroupName: "Georgia", },
+                { GroupName: "Guam", },
+                { GroupName: "Hawaii", },
+                { GroupName: "Idaho", },
+                { GroupName: "Illinois", },
+                { GroupName: "Indiana", },
+                { GroupName: "Iowa", },
+                { GroupName: "Kansas", },
+                { GroupName: "Kentucky", },
+                { GroupName: "Louisiana", },
+                { GroupName: "Maine", },
+                { GroupName: "Marshall Islands", },
+                { GroupName: "Maryland", },
+                { GroupName: "Massachusetts", },
+                { GroupName: "Michigan", },
+                { GroupName: "Minnesota", },
+                { GroupName: "Mississippi", },
+                { GroupName: "Missouri", },
+                { GroupName: "Montana", },
+                { GroupName: "Nebraska", },
+                { GroupName: "Nevada", },
+                { GroupName: "New Hampshire", },
+                { GroupName: "New Jersey", },
+                { GroupName: "New Mexico", },
+                { GroupName: "New York", },
+                { GroupName: "North Carolina", },
+                { GroupName: "North Dakota", },
+                { GroupName: "Northern Mariana Islands", },
+                { GroupName: "Ohio", },
+                { GroupName: "Oklahoma", },
+                { GroupName: "Oregon", },
+                { GroupName: "Palau", },
+                { GroupName: "Pennsylvania", },
+                { GroupName: "Puerto Rico", },
+                { GroupName: "Rhode Island", },
+                { GroupName: "South Carolina", },
+                { GroupName: "South Dakota", },
+                { GroupName: "Tennessee", },
+                { GroupName: "Texas", },
+                { GroupName: "Utah", },
+                { GroupName: "Vermont", },
+                { GroupName: "Virgin Islands", },
+                { GroupName: "Virginia", },
+                { GroupName: "Washington", },
+                { GroupName: "West Virginia", },
+                { GroupName: "Wisconsin", },
+                { GroupName: "Wyoming" },
+
+        ],
+        pageSize: 10,
+        schema: {
+            model: {
+                id: "id",
+                fields: {
+                    id: { type: 'number', editable: true },
+                    GroupName: { type: 'string', editable: true },
+                }
+            }
+        }
+    };
+
+    var grid1 = $("#grid1").kendoGrid({
+        dataSource: ds1,
+        editable: "popup",
+        selectable: "multiple",
+        pageable: {
+            buttonCount: 4
+        },
+        columns: [
+            { template: "<input type='checkbox' class='checkbox' />" },
+            { field: "GroupName", width: 400, title: "Selected Sites" },
+
+        ]
+    }).data("kendoGrid");
+    //bind click event to the checkbox
+    grid1.table.on("click", ".checkbox", selectRow);
+
+    var checkedIds1 = {};
+
+    //on click of the checkbox:
+    function selectRow() {
+        var checked = this.checked,
+            row = $(this).closest("tr"),
+            grid = $("#grid1").data("kendoGrid"),
+            dataItem = grid.dataItem(row);
+
+        checkedIds1[dataItem.id] = checked;
+        if (checked) {
+            //-select the row
+            row.addClass("k-state-selected");
+        } else {
+            //-remove selection
+            row.removeClass("k-state-selected");
+        }
+    }
+
+    var grid2 = $("#grid2").kendoGrid({
+        dataSource: ds2,
+        editable: "popup",
+        selectable: "multiple",
+        pageable: {
+            buttonCount: 4
+        },
+
+        columns: [
+             { template: "<input type='checkbox' class='checkbox' />" },
+            { field: "GroupName", width: 400, title: "Sites" },
+        ]
+    }).data("kendoGrid");
+    //bind click event to the checkbox
+    grid2.table.on("click", ".checkbox", selectRow);
+
+
+    $("#copySelectedToGrid2").on("click", function (idx, elem) {
+        moveTo(grid1, grid2);
+    });
+
+    $("#copySelectedToGrid1").on("click", function (idx, elem) {
+        moveTo(grid2, grid1);
+    });
+
+
+    function moveTo(from, to) {
+        var selected = from.select();
+        if (selected.length > 0) {
+            var items = [];
+            $.each(selected, function (idx, elem) {
+                items.push(from.dataItem(elem));
+            });
+            var fromDS = from.dataSource;
+            var toDS = to.dataSource;
+            $.each(items, function (idx, elem) {
+                toDS.add({ GroupName: elem.GroupName });
+                fromDS.remove(elem);
+            });
+            toDS.sync();
+            fromDS.sync();
+        }
+    }
+    var checkedIds = {};
+
+    //on click of the checkbox:
+    function selectRow() {
+        var checked = this.checked,
+            row = $(this).closest("tr"),
+            grid = $("#grid2").data("kendoGrid"),
+            dataItem = grid.dataItem(row);
+
+        checkedIds[dataItem.id] = checked;
+        if (checked) {
+            //-select the row
+            row.addClass("k-state-selected");
+        } else {
+            //-remove selection
+            row.removeClass("k-state-selected");
+        }
+    }
+
+
+</script>
+<script>
+    $(document).ready(function () {
+        //DataSource definition
+        var crudServiceBaseUrl = "http://demos.kendoui.com/service",
+            dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: crudServiceBaseUrl + "/Products",
+                        dataType: "jsonp"
+                    },
+                    update: {
+                        url: crudServiceBaseUrl + "/Products/Update",
+                        dataType: "jsonp"
+                    },
+                    destroy: {
+                        url: crudServiceBaseUrl + "/Products/Destroy",
+                        dataType: "jsonp"
+                    },
+                    create: {
+                        url: crudServiceBaseUrl + "/Products/Create",
+                        dataType: "jsonp"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation !== "read" && options.models) {
+                            return {
+                                models: kendo.stringify(options.models)
+                            };
+                        }
+                    }
+                },
+                batch: true,
+                pageSize: 20,
+                schema: {
+                    model: {
+                        id: "ProductID",
+                        fields: {
+                            ProductID: {
+                                editable: false,
+                                nullable: true
+                            },
+                            ProductName: {
+                                validation: {
+                                    required: true
+                                }
+                            },
+                            UnitPrice: {
+                                type: "number",
+                                validation: {
+                                    required: true,
+                                    min: 1
+                                }
+                            },
+                            Discontinued: {
+                                type: "boolean"
+                            },
+                            UnitsInStock: {
+                                type: "number",
+                                validation: {
+                                    min: 0,
+                                    required: true
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+        //Grid definition
+        var grid = $("#grid3").kendoGrid({
+            dataSource: dataSource,
+            pageable: true,
+            height: 430,
+            //define dataBound event handler
+            dataBound: onDataBound,
+            toolbar: ["create"],
+            columns: [
+                //define template column with checkbox and attach click event handler
+                { template: "<input type='checkbox' class='checkbox' />" , width:30 },
+                "ProductName",
+                {
+                    field: "UnitPrice",
+                    title: "Unit Price",
+                    format: "{0:c}",
+                    width: "100px"
+                }, {
+                    field: "UnitsInStock",
+                    title: "Units In Stock",
+                    width: "100px"
+                }, {
+                    field: "Discontinued",
+                    width: "100px"
+                }, {
+                    command: ["edit", "destroy"],
+                    title: "&nbsp;",
+                    width: "172px"
+                }
+            ],
+            editable: "inline"
+        }).data("kendoGrid");
+
+        //bind click event to the checkbox
+        grid.table.on("click", ".checkbox", selectRow);
+
+        $("#showSelection").bind("click", function () {
+            var checked = [];
+            for (var i in checkedIds) {
+                if (checkedIds[i]) {
+                    checked.push(i);
+                }
+            }
+
+            alert(checked);
+        });
+    });
+
+    var checkedIds = {};
+
+    //on click of the checkbox:
+    function selectRow() {
+        var checked = this.checked,
+            row = $(this).closest("tr"),
+            grid = $("#grid3").data("kendoGrid"),
+            dataItem = grid.dataItem(row);
+
+        checkedIds[dataItem.id] = checked;
+        if (checked) {
+            //-select the row
+            row.addClass("k-state-selected");
+        } else {
+            //-remove selection
+            row.removeClass("k-state-selected");
+        }
+    }
+
+    //on dataBound event restore previous selected rows:
+    function onDataBound(e) {
+        var view = this.dataSource.view();
+        for (var i = 0; i < view.length; i++) {
+            if (checkedIds[view[i].id]) {
+                this.tbody.find("tr[data-uid='" + view[i].uid + "']")
+                    .addClass("k-state-selected")
+                    .find(".checkbox")
+                    .attr("checked", "checked");
+            }
+        }
+    }
+</script>
+
+
+
+
+}

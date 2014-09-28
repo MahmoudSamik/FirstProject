@@ -1,0 +1,322 @@
+﻿
+</div> @*End Row*@
+</div> @*End Container*@
+<footer class="col-md-12">
+    <div class="col-md-2"> <img class="img-responsive" src="~/Content/Images/logo.png" /></div>
+    <div class="pull-right"> All Rights Reserved Foothil Solutions &copy; @DateTime.Today.Year</div>
+</footer>
+</div> @*End Main Container*@
+@*      Core Scripts        *@
+<script src="~/Scripts/jquery-2.1.0.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/kendo.all.min.js"></script>
+@*Theme Specific JavaScript**@
+@{
+    var Theme = System.Configuration.ConfigurationManager.AppSettings["Theme"];
+
+    if (Theme == "Theme1")
+    {
+
+     
+    }
+    if (Theme == "Theme2")
+    {
+        
+
+    }
+}
+@*Widget Script*@
+<script>
+    $(document).ready(function () {
+        $("#main-content").kendoSortable({
+            filter: ">div",
+            cursor: "move",
+            placeholder: placeholder,
+            hint: hint,
+            ignore: "input",
+        });
+
+        //exapand
+        $(".panel-wrap").on("click", "span.k-i-arrowhead-s", function (e) {
+            var contentElement = $(e.target).closest(".widget").find(">div");
+            $(e.target)
+                .removeClass("k-i-arrowhead-s")
+                .addClass("k-i-arrowhead-n");
+
+            kendo.fx(contentElement).expand("vertical").stop().play();
+        });
+
+        //collapse
+        $(".panel-wrap").on("click", "span.k-i-arrowhead-n", function (e) {
+            var contentElement = $(e.target).closest(".widget").find(">div");
+            $(e.target)
+                .removeClass("k-i-arrowhead-n")
+                .addClass("k-i-arrowhead-s");
+
+            kendo.fx(contentElement).expand("vertical").stop().reverse();
+        });
+    });
+
+    function placeholder(element) {
+        return element.clone().addClass("placeholder");
+    }
+
+    function hint(element) {
+        return element.clone().addClass("hint")
+                    .height(element.height())
+                    .width(element.width());
+    }
+</script>
+@*Notification Tab*@
+ <script>
+    $(document).ready(function() {
+        $("#notifications").kendoMenu();
+    });
+</script>
+ @*Script for Sidebar*@
+<script>
+                $(document).ready(function () {
+                    $("#sidebar").kendoPanelBar({
+                        
+                    });
+                    $("#panel").kendoPanelBar({});
+                });
+            </script>
+<script>
+    var slide = kendo.fx($("#slide-in-content")).slideIn("right"),
+        visible = true;
+
+    $("#slide-in-handle").click(function (e) {
+        if (visible) {
+            slide.reverse();
+        } else {
+            slide.play();
+        }
+        visible = !visible;
+        e.preventDefault();
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
+        $("#menu").kendoMenu({
+            orientation: "vertical"
+        });
+    });
+</script>
+ 
+@*Scripts for Window Panels *@
+<script>
+        $(document).ready(function () {
+            var window = $("#window"),
+                undo = $("#undo")
+                        .bind("click", function () {
+                            window.data("kendoWindow").open();
+                            undo.hide();
+                        });
+
+            var onClose = function () {
+                undo.show();
+            }
+
+            if (!window.data("kendoWindow")) {
+                window.kendoWindow({
+                    width: "600",
+                    title:"Windows DataViz",
+                    actions: [
+                        "Pin",
+                        "Minimize",
+                        "close",
+                        
+                    ],
+                    close: onClose,
+                    dragable:false,
+                });
+            }
+        });
+            </script> 
+<script>
+    $(document).ready(function () {
+        var window = $("#controlPanel"),
+            undo = $("#undoControlPanel")
+                    .bind("click", function () {
+                        window.data("kendoWindow").open();
+                        undo.hide();
+                    });
+
+        var onClose = function () {
+            undo.show();
+        }
+
+        if (!window.data("kendoWindow")) {
+            window.kendoWindow({
+                visible: false,
+                width: "300",
+                title: "Todo List",
+                actions: [
+                    "Minimize",
+                    "Close"
+                ],
+               
+                close: onClose,
+                dragable: true,
+            });
+        }
+    });
+
+            </script>
+<script>
+    $("#treeview").kendoTreeView({
+        checkboxes: {
+            checkChildren: true
+        },
+
+        dataSource: [{
+            id: 1, text: "Tasks", expanded: true, items: [
+                {
+                    id: 2, text: "Calls To Make", expanded: true, items: [
+                        { id: 3, text: "John Doe"},
+                        { id: 4, text: "Jane Doe"},
+                        { id: 5, text: "Uncle Sam"}
+                    ]
+                },
+                {
+                    id: 6, text: "New Web Site", expanded: true, items: [
+                        { id: 7, text: "mockup.jpg"},
+                        { id: 8, text: "Research.pdf"},
+                    ]
+                },
+                {
+                    id: 9, text: "Reports", expanded: true, items: [
+                        { id: 10, text: "February.pdf"},
+                        { id: 11, text: "March.pdf"},
+                        { id: 12, text: "April.pdf"}
+                    ]
+                }
+            ]
+        }]
+    });
+
+    // function that gathers IDs of checked nodes
+    function checkedNodeIds(nodes, checkedNodes) {
+        for (var i = 0; i < nodes.length; i++) {
+            if (nodes[i].checked) {
+                checkedNodes.push(nodes[i].id);
+            }
+
+            if (nodes[i].hasChildren) {
+                checkedNodeIds(nodes[i].children.view(), checkedNodes);
+            }
+        }
+    }
+</script>
+
+@* Responsive DataViz*@
+<script>
+$(window).resize(function() {
+  // for any chart or gauge widget
+  $(".k-chart, .k-gauge").each(function() {
+    // get the instance of the chart/gauage
+    var chart = kendo.widgetInstance($(this), kendo.dataviz.ui);
+    // make sure transitions are off
+    chart.options.transitions = false;
+    // redraw the chart/gauge
+    if (chart && chart.redraw) {
+      chart.redraw();
+    }
+  });
+});</script>
+@*Clock in the header*@
+<script type="text/javascript">
+
+    function GetClock() {
+        d = new Date();
+        nhour = d.getHours();
+        nmin = d.getMinutes();
+        nsec = d.getSeconds();
+
+        if (nhour == 0) { ap = " AM"; nhour = 12; }
+        else if (nhour <= 11) { ap = " AM"; }
+        else if (nhour == 12) { ap = " PM"; }
+        else if (nhour >= 13) { ap = " PM"; nhour -= 12; }
+
+        if (nmin <= 9) { nmin = "0" + nmin; }
+        if (nsec <= 9) { nsec = "0" + nsec; }
+
+
+        document.getElementById('clockbox').innerHTML = "" + nhour + ":" + nmin + ":" + nsec + ap + "";
+        setTimeout("GetClock()", 1000);
+    }
+    window.onload = GetClock;
+</script>
+<script>
+    // use as theme: 'newTheme'
+    kendo.dataviz.ui.registerTheme('newTheme', {
+        "chart": {
+            "title": {
+                "color": "#343434"
+            },
+            "legend": {
+                "labels": {
+                    "color": "#343434"
+                }
+            },
+            "chartArea": {
+                "background": "rgba(0, 0, 0, 0)"
+            },
+            "seriesDefaults": {
+                "labels": {
+                    "color": "#343434"
+                }
+            },
+            "axisDefaults": {
+                "line": {
+                    "color": "#b8b8b8"
+                },
+                "labels": {
+                    "color": "#343434"
+                },
+                "minorGridLines": {
+                    "color": "#dddddd"
+                },
+                "majorGridLines": {
+                    "color": "#b8b8b8"
+                },
+                "title": {
+                    "color": "#343434"
+                }
+            },
+            "seriesColors": [
+                "#006dcc",
+                "#49AFCD",
+                "#5BB75B",
+                "#FAA732",
+                "#DA4F49",
+                "#363636"
+            ],
+            "tooltip": {}
+        },
+        "gauge": {
+            "pointer": {
+                "color": "#0044cc"
+            },
+            "scale": {
+                "rangePlaceholderColor": "#b8b8b8",
+                "labels": {
+                    "color": "#343434"
+                },
+                "minorTicks": {
+                    "color": "#dddddd"
+                },
+                "majorTicks": {
+                    "color": "#b8b8b8"
+                },
+                "line": {
+                    "color": "#b8b8b8"
+                }
+            }
+        }
+    });
+</script>
+@*      Page Specific Scripts       *@
+@RenderSection("FooterJs", required: false)

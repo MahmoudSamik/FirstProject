@@ -1,0 +1,365 @@
+﻿@inherits ViewPage
+@{
+    ViewBag.title = "Dashboard";
+    Layout = "_Layout";
+    ViewBag.theme = "newTheme";
+}
+<div class="col-md-12">
+
+
+    <div class="widget">
+        <h3 class="k-header">Donut Charts <span class="collapse k-icon k-i-arrowhead-n"></span></h3>
+        <div class="col-md-5">
+            <div id="donutChartOne"></div>
+        </div>
+        <div class="col-md-5 pull-right">
+            <div id="donutChartTwo"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="widget">
+        <h3 class="k-header">Bar Charts <span class="collapse k-icon k-i-arrowhead-n"></span></h3>
+        <div class="col-md-12"> <div id="barChartOne"></div></div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="widget">
+    <h3 class="k-header">Area Charts <span class="collapse k-icon k-i-arrowhead-n"></span></h3>
+        <div class="col-md-5">
+            <div id="areaChartOne"></div>
+        </div>
+        <div class="col-md-5 pull-right">
+            <div id="areaChartTwo"></div>
+        </div>
+    </div>
+</div>
+@section FooterJs{
+    <script>
+        function createChart() {
+            $("#donutChartOne").kendoChart(
+                {
+                    theme: "@ViewBag.theme",
+                    title: {
+                        position: "bottom",
+                        text: "Share of Internet Population Growth"
+                    },
+                    legend: {
+                        visible: false
+                    },
+                    chartArea: {
+                        background: ""
+                    },
+                    seriesDefaults: {
+                        type: "donut",
+                        startAngle: 150
+                    },
+                    series: [{
+                        name: "2011",
+                        data: [{
+                            category: "Asia",
+                            value: 30.8,
+                        }, {
+                            category: "Europe",
+                            value: 21.1,
+                        }, {
+                            category: "Latin America",
+                            value: 16.3,
+                        }, {
+                            category: "Africa",
+                            value: 17.6,
+                        }, {
+                            category: "Middle East",
+                            value: 9.2,
+                        }, {
+                            category: "North America",
+                            value: 4.6,
+                        }]
+                    }, {
+                        name: "2012",
+                        data: [{
+                            category: "Asia",
+                            value: 53.8,
+                        }, {
+                            category: "Europe",
+                            value: 16.1,
+                        }, {
+                            category: "Latin America",
+                            value: 11.3,
+                        }, {
+                            category: "Africa",
+                            value: 9.6,
+                        }, {
+                            category: "Middle East",
+                            value: 5.2,
+                        }, {
+                            category: "North America",
+                            value: 3.6,
+                        }],
+                        labels: {
+                            visible: true,
+                            background: "transparent",
+                            position: "outsideEnd",
+                            template: "#= category #: #= value#%"
+                        }
+                    }],
+                    tooltip: {
+                        visible: true,
+                        template: "#= category # (#= series.name #): #= value #%"
+                    }
+                });
+        }
+
+        $(document).ready(createChart);
+        $(document).bind("kendo:skinChange", createChart);
+    </script>
+    <script>
+        function createChart() {
+            $("#donutChartTwo").kendoChart({
+                theme: "@ViewBag.theme",
+                title: {
+                    position: "bottom",
+                    text: "Share of Internet Population Growth Estimates"
+                },
+                legend: {
+                    visible: false
+                },
+                chartArea: {
+                    background: ""
+                },
+                seriesDefaults: {
+                    type: "donut",
+                    startAngle: 150
+                },
+                series: [{
+                    name: "2014",
+                    data: [{
+                        category: "Asia",
+                        value: 40.8,
+                    }, {
+                        category: "Europe",
+                        value: 21.1,
+                    }, {
+                        category: "Latin America",
+                        value: 20.0,
+                    }, {
+                        category: "Africa",
+                        value: 17.6,
+                    }, {
+                        category: "Middle East",
+                        value: 25.2,
+                    }, {
+                        category: "North America",
+                        value: 4.6,
+                    }]
+                }, {
+                    name: "2015",
+                    data: [{
+                        category: "Asia",
+                        value: 60.8,
+                    }, {
+                        category: "Europe",
+                        value: 16.1,
+                    }, {
+                        category: "Latin America",
+                        value: 11.3,
+                    }, {
+                        category: "Africa",
+                        value: 9.6,
+                    }, {
+                        category: "Middle East",
+                        value: 35,
+                    }, {
+                        category: "North America",
+                        value: 3.6,
+                    }],
+                    labels: {
+                        visible: true,
+                        background: "transparent",
+                        position: "outsideEnd",
+                        template: "#= category #: #= value#%"
+                    }
+                }],
+                tooltip: {
+                    visible: true,
+                    template: "#= category # (#= series.name #): #= value #%"
+                }
+            });
+        }
+
+        $(document).ready(createChart);
+        $(document).bind("kendo:skinChange", createChart);
+    </script>
+    <script>
+        function createChart() {
+            $("#barChartOne").kendoChart({
+                theme: "@ViewBag.theme",
+                title: {
+
+                    text: "Site Visitors Stats /thousands/"
+                },
+                legend: {
+                    visible: false
+                },
+                seriesDefaults: {
+                    type: "bar"
+                },
+                series: [{
+                    name: "Total Visits",
+                    data: [56000, 63000, 74000, 91000, 117000, 138000]
+                }, {
+                    name: "Unique visitors",
+                    data: [52000, 34000, 23000, 48000, 67000, 83000]
+                }],
+                valueAxis: {
+                    max: 140000,
+                    line: {
+                        visible: false
+                    },
+                    minorGridLines: {
+                        visible: true
+                    }
+                },
+                categoryAxis: {
+                    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                    majorGridLines: {
+                        visible: false
+                    }
+                },
+                tooltip: {
+                    visible: true,
+                    template: "#= series.name #: #= value #"
+                }
+            });
+        }
+
+        $(document).ready(createChart);
+        $(document).bind("kendo:skinChange", createChart);
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#dashboarPanel").kendoPanelBar({
+
+
+            });
+
+        });
+    </script>
+    <script>
+        function createChart() {
+            $("#areaChartOne").kendoChart({
+                theme: "@ViewBag.theme",
+                title: {
+                    text: "Gross domestic product growth /GDP annual %/"
+                },
+                legend: {
+                    position: "bottom"
+                },
+                seriesDefaults: {
+                    type: "area",
+                    area: {
+                        line: {
+                            style: "smooth"
+                        }
+                    }
+                },
+                series: [{
+                    name: "India",
+                    data: [3.907, 7.943, 7.848, 9.284, 9.263, 9.801, 3.890, 8.238, 9.552, 6.855]
+                }, {
+                    name: "World",
+                    data: [1.988, 2.733, 3.994, 3.464, 4.001, 3.939, 1.333, -2.245, 4.339, 2.727]
+                }, {
+                    name: "Haiti",
+                    data: [-0.253, 0.362, -3.519, 1.799, 2.252, 3.343, 0.843, 2.877, -5.416, 5.590]
+                }],
+                valueAxis: {
+                    labels: {
+                        format: "{0}%"
+                    },
+                    line: {
+                        visible: false
+                    },
+                    axisCrossingValue: -10
+                },
+                categoryAxis: {
+                    categories: [2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011],
+                    majorGridLines: {
+                        visible: false
+                    }
+                },
+                tooltip: {
+                    visible: true,
+                    format: "{0}%",
+                    template: "#= series.name #: #= value #"
+                }
+            });
+        }
+
+        $(document).ready(createChart);
+        $(document).bind("kendo:skinChange", createChart);
+    </script>
+    <script>
+        function createChart() {
+            $("#areaChartTwo").kendoChart({
+                theme: "@ViewBag.Theme",
+                title: {
+                    text: "Hybrid car mileage report"
+                },
+                legend: {
+                    position: "top"
+                },
+                series: [{
+                    type: "column",
+                    data: [20, 40, 45, 30, 50],
+                    stack: true,
+                    name: "on battery",
+                }, {
+                    type: "column",
+                    data: [20, 30, 35, 35, 40],
+                    stack: true,
+                    name: "on gas",
+                }, {
+                    type: "area",
+                    data: [30, 38, 40, 32, 42],
+                    name: "mpg",
+                    axis: "mpg"
+                }, {
+                    type: "area",
+                    data: [7.8, 6.2, 5.9, 7.4, 5.6],
+                    name: "l/100 km",
+                    axis: "l100km"
+                }],
+                valueAxes: [{
+                    title: { text: "miles" },
+                    min: 0,
+                    max: 100
+                }, {
+                    name: "km",
+                    title: { text: "km" },
+                    min: 0,
+                    max: 161,
+                    majorUnit: 32
+                }, {
+                    name: "mpg",
+                    title: { text: "miles per gallon" },
+                }, {
+                    name: "l100km",
+                    title: { text: "liters per 100km" },
+                }],
+                categoryAxis: {
+                    categories: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+                    // Align the first two value axes to the left
+                    // and the last two to the right.
+                    //
+                    // Right alignment is done by specifying a
+                    // crossing value greater than or equal to
+                    // the number of categories.
+                    axisCrossingValues: [0, 0, 10, 10]
+                }
+            });
+        }
+
+        $(document).ready(createChart);
+        $(document).bind("kendo:skinChange", createChart);
+    </script>
+}

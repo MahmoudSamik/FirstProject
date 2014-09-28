@@ -1,0 +1,58 @@
+﻿.widget {
+  margin: 0 0 20px;
+  padding: 10px;
+  padding-top: 0px;
+  border-radius: 3px;
+}
+.widget h3 {
+  margin: 0px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.widget h3 span {
+  float: right;
+  font-size: .7em;
+}
+.widget h3 span:hover {
+  cursor: pointer;
+  border-radius: 20px;
+}
+.pointer:hover {
+  cursor: pointer;
+}
+.handler {
+  cursor: move;
+}
+.hint {
+  width: 250px;
+  height: 100px;
+  overflow: hidden;
+}
+.hint > h3 {
+  padding-left: 20px;
+}
+.k-widget,
+.k-button {
+  box-shadow: none;
+}
+.k-editor-toolbar {
+  padding: 10px;
+}
+.form-group .k-dropzone {
+  padding: 0px;
+}
+footer {
+  padding: 5px;
+}
+.sidebarUserOptions {
+  font-size: 9px;
+}
+.fixedSideBar {
+  margin-top: 6%;
+  z-index: 1;
+}
+#main-content {
+  margin-left: 16.666666666666664%;
+  margin-top: 6%;
+}
+/*# sourceMappingURL=Styles.css.map */

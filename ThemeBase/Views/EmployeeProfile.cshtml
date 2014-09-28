@@ -1,0 +1,326 @@
+﻿@inherits ViewPage
+
+@{
+    ViewBag.title = "Employee Profile";
+    Layout = "_Layout";
+    ViewBag.theme = "bootstrap";
+    ViewBag.name = "John Doe";
+}
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-3">
+            <img src="http://placekitten.com/g/300/300" class="img-responsive test" alt="" />
+        </div>
+        <div class="col-md-4">
+            <h4>@ViewBag.name</h4>
+            <span>
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
+            </span>
+        </div>
+        <div class="col-md-4">
+            <div id="skillsChart"></div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div id="employeeSchedule"></div>
+    </div>
+    <div class="col-md-6 well">
+        <div class="row">
+            <h3>Tasks</h3>
+            <span>Click on a task to see its Details</span>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12" id="taskOneContainer">
+                        <div id="taskOneSimple">
+                            <h3>Task One</h3>
+                            <div id="taskOne"></div>
+                        </div>
+
+                        <div class="col-md-12 hide" id="taskOneDetails">
+                            <h3>Task One Details</h3>
+                            <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12" id="taskTwoContainer">
+                        <div id="taskTwoSimple">
+                            <h3>Task Two</h3>
+                            <div id="taskTwo"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 hide" id="taskTwoDetails">
+                        <h3>Task Two Details</h3>
+                        <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12" id="taskThreeContainer">
+                        <div id="taskThreeSimple">
+                            <h3>Task Three</h3>
+                            <div id="taskThree"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 hide" id="taskThreeDetails">
+                        <h3>Task One Details</h3>
+                        <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12" id="taskFourContainer">
+                        <div id="taskFourSimple">
+                            <h3>Task Four</h3>
+                            <div id="taskFour"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 hide" id="taskFourDetails">
+                        <h3>Task Four Details</h3>
+                        <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.</span>
+                        <img class="img-responsive" src="~/Content/Images/Cat1.png" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section FooterJs{
+<script>
+        function createChart() {
+            $("#skillsChart").kendoChart({
+                theme: "@ViewBag.theme",
+                title: {
+
+                    text: "Employee Skills"
+                },
+                legend: {
+                    position: "bottom"
+                },
+                seriesDefaults: {
+                    type: "radarArea"
+                },
+                series: [{
+                    name: "@ViewBag.name",
+                    data: [100, 30, 30, 100, 20, 100]
+                }, ],
+                categoryAxis: {
+                    categories: [
+                        "Experience", "Communication", "Friendliness",
+                        "Subject knowledge", "Presentation", "Education"
+                    ],
+                    majorGridLines: {
+                        visible: false
+                    }
+                },
+                valueAxis: {
+                    labels: {
+                        format: "{0}%"
+                    },
+                    line: {
+                        visible: false
+                    }
+                }
+            });
+        }
+
+        $(document).ready(createChart);
+        $(document).bind("kendo:skinChange", createChart);
+    </script>
+<script>
+        $(function () {
+            $("#employeeSchedule").kendoScheduler({
+                date: new Date("2013/6/13"),
+                startTime: new Date("2013/6/13 07:00 AM"),
+                height: 600,
+                views: [
+                    "day",
+                    { type: "workWeek", selected: true },
+                    "week",
+                    "month",
+                    "agenda"
+                ],
+                timezone: "Etc/UTC",
+                dataSource: {
+                    batch: true,
+                    transport: {
+                        read: {
+                            url: "http://demos.telerik.com/kendo-ui/service/tasks",
+                            dataType: "jsonp"
+                        },
+                        update: {
+                            url: "http://demos.telerik.com/kendo-ui/service/tasks/update",
+                            dataType: "jsonp"
+                        },
+                        create: {
+                            url: "http://demos.telerik.com/kendo-ui/service/tasks/create",
+                            dataType: "jsonp"
+                        },
+                        destroy: {
+                            url: "http://demos.telerik.com/kendo-ui/service/tasks/destroy",
+                            dataType: "jsonp"
+                        },
+                        parameterMap: function (options, operation) {
+                            if (operation !== "read" && options.models) {
+                                return { models: kendo.stringify(options.models) };
+                            }
+                        }
+                    },
+                    schema: {
+                        model: {
+                            id: "taskId",
+                            fields: {
+                                taskId: { from: "TaskID", type: "number" },
+                                title: { from: "Title", defaultValue: "No title", validation: { required: true } },
+                                start: { type: "date", from: "Start" },
+                                end: { type: "date", from: "End" },
+                                startTimezone: { from: "StartTimezone" },
+                                endTimezone: { from: "EndTimezone" },
+                                description: { from: "Description" },
+                                recurrenceId: { from: "RecurrenceID" },
+                                recurrenceRule: { from: "RecurrenceRule" },
+                                recurrenceException: { from: "RecurrenceException" },
+                                ownerId: { from: "OwnerID", defaultValue: 1 },
+                                isAllDay: { type: "boolean", from: "IsAllDay" }
+                            }
+                        }
+                    },
+                    filter: {
+                        logic: "or",
+                        filters: [
+                            { field: "ownerId", operator: "eq", value: 1 },
+                            { field: "ownerId", operator: "eq", value: 2 }
+                        ]
+                    }
+                },
+                resources: [
+                    {
+                        field: "ownerId",
+                        title: "Owner",
+                        dataSource: [
+                            { text: "Alex", value: 1, color: "#f8a398" },
+                            { text: "Bob", value: 2, color: "#51a0ed" },
+                            { text: "Charlie", value: 3, color: "#56ca85" }
+                        ]
+                    }
+                ]
+            });
+
+            $("#people :checkbox").change(function (e) {
+                var checked = $.map($("#people :checked"), function (checkbox) {
+                    return parseInt($(checkbox).val());
+                });
+
+                var filter = {
+                    logic: "or",
+                    filters: $.map(checked, function (value) {
+                        return {
+                            operator: "eq",
+                            field: "ownerId",
+                            value: value
+                        };
+                    })
+                };
+
+                var scheduler = $("#scheduler").data("kendoScheduler");
+
+                scheduler.dataSource.filter(filter);
+            });
+        });
+    </script>
+<script>
+        $(document).ready(function () {
+            $("#taskOne").kendoProgressBar({
+                type: "percent",
+                value: 50,
+            }).data("kendoProgressBar");
+        });
+        $(document).ready(function () {
+            $("#taskTwo").kendoProgressBar({
+                type: "percent",
+                value: 70,
+            }).data("kendoProgressBar");
+        });
+        $(document).ready(function () {
+            $("#taskThree").kendoProgressBar({
+                type: "percent",
+                value: 100,
+            }).data("kendoProgressBar");
+        });
+        $(document).ready(function () {
+            $("#taskFour").kendoProgressBar({
+                type: "percent",
+                value: 20,
+            }).data("kendoProgressBar");
+        });
+    </script>
+<script>
+    $(document).ready(function () {
+        var el = kendo.fx($("#taskOneContainer")),
+            flip = el.flip("horizontal", $("#taskOneSimple"), $("#taskOneDetails"));
+
+        $("#taskOneSimple").click(function () {
+            flip.stop().play();
+            $("#taskOneDetails").removeClass('hide').addClass('show')
+        });
+
+        $("#taskOneDetails").click(function () {
+            flip.stop().reverse();
+            $("#taskOneDetails").removeClass('show').addClass('hide')
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var el = kendo.fx($("#taskTwoContainer")),
+            flip = el.flip("horizontal", $("#taskTwoSimple"), $("#taskTwoDetails"));
+
+        $("#taskTwoSimple").click(function () {
+            flip.stop().play();
+            $("#taskTwoDetails").removeClass('hide').addClass('show')
+        });
+
+        $("#taskTwoDetails").click(function () {
+            flip.stop().reverse();
+            $("#taskTwoDetails").removeClass('show').addClass('hide')
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var el = kendo.fx($("#taskThreeContainer")),
+            flip = el.flip("horizontal", $("#taskThreeSimple"), $("#taskThreeDetails"));
+
+        $("#taskThreeSimple").click(function () {
+            flip.stop().play();
+            $("#taskThreeDetails").removeClass('hide').addClass('show')
+        });
+
+        $("#taskThreeDetails").click(function () {
+            flip.stop().reverse();
+            $("#taskThreeDetails").removeClass('show').addClass('hide')
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var el = kendo.fx($("#taskFourContainer")),
+            flip = el.flip("horizontal", $("#taskFourSimple"), $("#taskFourDetails"));
+
+        $("#taskFourSimple").click(function () {
+            flip.stop().play();
+            $("#taskFourDetails").removeClass('hide').addClass('show')
+        });
+
+        $("#taskFourDetails").click(function () {
+            flip.stop().reverse();
+            $("#taskFourDetails").removeClass('show').addClass('hide')
+        });
+    });
+</script>
+}
